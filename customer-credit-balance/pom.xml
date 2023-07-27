@@ -36,8 +36,9 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.9</version>
+      <version>4.5.13</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -69,6 +70,7 @@
 			      <archive>
 				      <manifest>
 					      <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
 					      <!-- here we specify that we want to use the main method within the App class -->
 					      <mainClass>de.viind.App</mainClass>
 				      </manifest>
@@ -91,6 +93,25 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                <excludeTransitive>false</excludeTransitive> 
+                <stripVersion>false</stripVersion>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>maven-install-plugin</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
       </plugins>
     </pluginManagement>
